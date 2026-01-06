@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InkTry - AI Tattoo Design Generator</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(1.05);
+            }
+        }
+
+        .animate-pulse-slow {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white font-sans selection:bg-orange-500/30">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background gradient -->
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-900/20 via-black to-red-900/20"></div>
+
+        <!-- Animated circle -->
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-red-600/20 rounded-full blur-3xl animate-pulse-slow"></div>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-6 py-20 text-center">
+            <!-- Logo -->
+            <div class="mb-8">
+                <img src="logo.png" alt="InkTry Logo" class="w-32 h-32 mx-auto rounded-3xl shadow-2xl">
+            </div>
+
+            <h1 class="text-5xl md:text-7xl lg:text-8xl mb-6 text-white font-bold tracking-tight">
+                InkTry
+            </h1>
+
+            <p class="text-xl md:text-3xl text-gray-300 mb-4 max-w-3xl mx-auto">
+                AI Tattoo Design Generator
+            </p>
+
+            <p class="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+                Create unique, personalized tattoo designs with AI and try them on yourself in AR.
+                Transform your ideas into stunning artwork and see how they look on your body in seconds.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="https://apps.apple.com/app/id6755972452" target="_blank" rel="noopener noreferrer"
+                    class="inline-block transition-transform hover:scale-105 duration-200">
+                    <img src="app-store-badge.png" alt="Download on the App Store" class="h-14">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-black border-t border-white/10">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="flex flex-col items-center justify-center gap-4 text-gray-400">
+                <p>© 2026 InkTry</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-white transition-colors">Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
