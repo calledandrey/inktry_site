@@ -156,21 +156,6 @@
             style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <!-- TikTok Workaround Toast -->
-    <div id="tiktok-toast" onclick="this.style.display='none'">
-        <div class="toast-step">
-            <span class="toast-num">1.</span>
-            <span>On <div class="tiktok-logo"><svg viewBox="0 0 448 512" fill="white">
-                        <path
-                            d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17h0A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14z" />
-                    </svg></div> TikTok, <span class="toast-bold">press the ... (3 dots) at the top right.</span></span>
-        </div>
-        <div class="toast-step">
-            <span class="toast-num">2.</span>
-            <span>Then <span class="toast-bold">press "Open in browser"</span> to download <span
-                    class="toast-bold">InkTry</span> for free.</span>
-        </div>
-    </div>
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <!-- Background gradient -->
@@ -200,8 +185,7 @@
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a href="https://apps.apple.com/us/app/inktry-ai-tattoo-generator/id6755972452" target="_blank"
-                    rel="noopener noreferrer" onclick="handleAppStoreClick(event)"
-                    class="inline-block transition-transform hover:scale-105 duration-200">
+                    rel="noopener noreferrer" class="inline-block transition-transform hover:scale-105 duration-200">
                     <img src="app-store-badge.png" alt="Download on the App Store" class="h-14">
                 </a>
             </div>
@@ -220,6 +204,74 @@
             </div>
         </div>
     </footer>
+
+    <!-- TikTok/In-App Browser Popup -->
+    <div id="tiktok-popup"
+        class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm transition-opacity duration-300">
+        <div
+            class="bg-white text-black p-8 rounded-[2rem] max-w-sm w-full shadow-2xl relative animate-in fade-in zoom-in duration-300">
+            <button onclick="document.getElementById('tiktok-popup').classList.add('hidden')"
+                class="absolute top-4 right-4 text-gray-400 hover:text-black transition-colors p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <div class="space-y-6 py-2">
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-bold mb-2">Open in Browser</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        To download InkTry correctly, please open this page in Safari.
+                    </p>
+                </div>
+
+                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-2xl">
+                    <span
+                        class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-black text-white font-bold text-lg">1</span>
+                    <p class="text-lg font-medium leading-tight pt-0.5">
+                        Tap the <span class="font-bold">...</span> or <span class="font-bold">Share</span> button
+                    </p>
+                </div>
+
+                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-2xl">
+                    <span
+                        class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-black text-white font-bold text-lg">2</span>
+                    <p class="text-lg font-medium leading-tight pt-0.5">
+                        Choose <span class="font-bold">Open in Browser</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Robust detection for in-app browsers
+        (function () {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            // Check for TikTok (various identifiers)
+            const isTikTok = /TikTok|musical_ly|ByteLocale|ByteDance/i.test(ua);
+            // Check for Instagram
+            const isInstagram = /Instagram/i.test(ua);
+
+            if (isTikTok || isInstagram) {
+                // Show popup automatically
+                const popup = document.getElementById('tiktok-popup');
+                if (popup) {
+                    popup.classList.remove('hidden');
+                    // Prevent body scroll when popup is open
+                    document.body.style.overflow = 'hidden';
+
+                    // Re-enable scroll when closed
+                    const closeBtn = popup.querySelector('button');
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', () => {
+                            document.body.style.overflow = '';
+                        });
+                    }
+                }
+            }
+        })();
+    </script>
 </body>
 
 </html>
