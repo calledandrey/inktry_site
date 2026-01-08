@@ -53,7 +53,101 @@
         .animate-pulse-slow {
             animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
+
+        #tiktok-toast {
+            display: none;
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: calc(100% - 32px);
+            max-width: 420px;
+            background: #FFFFFF;
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            animation: slideInDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            color: #1F2937;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        @keyframes slideInDown {
+            from {
+                transform: translate(-50%, -20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .toast-num {
+            font-weight: 800;
+            font-size: 20px;
+            margin-right: 12px;
+            color: #111827;
+        }
+
+        .toast-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+
+        .toast-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .toast-bold {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .tiktok-logo {
+            display: inline-block;
+            vertical-align: middle;
+            height: 22px;
+            width: 22px;
+            background: black;
+            border-radius: 50%;
+            padding: 3px;
+            margin: 0 4px;
+        }
     </style>
+    <script>
+        function isTikTok() {
+            var ua = navigator.userAgent || navigator.vendor || window.opera;
+            return (ua.indexOf('Musical_ly') > -1) || (ua.indexOf('ByteDance') > -1) || (ua.indexOf('TikTok') > -1);
+        }
+
+        window.onload = function () {
+            const APP_STORE_URL = "https://apps.apple.com/us/app/inktry-ai-tattoo-generator/id6755972452";
+
+            if (isTikTok()) {
+                document.getElementById('tiktok-toast').style.display = 'block';
+            } else {
+                // If the user was just in TikTok and now opened in browser, redirect them
+                // We use a simple session flag to avoid redirecting everyone who lands on the site normally
+                if (document.referrer.includes('inktry.com') || window.name === 'tiktok_redirect') {
+                    window.location.href = APP_STORE_URL;
+                }
+            }
+        };
+
+        function handleAppStoreClick(e) {
+            if (isTikTok()) {
+                e.preventDefault();
+                document.getElementById('tiktok-toast').style.display = 'block';
+                // Set window.name so that when they open in browser, we know to redirect
+                window.name = 'tiktok_redirect';
+            }
+        }
+    </script>
 </head>
 
 <body class="bg-black text-white font-sans selection:bg-orange-500/30">
@@ -61,6 +155,22 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NM2H5CW9" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+
+    <!-- TikTok Workaround Toast -->
+    <div id="tiktok-toast" onclick="this.style.display='none'">
+        <div class="toast-step">
+            <span class="toast-num">1.</span>
+            <span>On <div class="tiktok-logo"><svg viewBox="0 0 448 512" fill="white">
+                        <path
+                            d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17h0A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14z" />
+                    </svg></div> TikTok, <span class="toast-bold">press the ... (3 dots) at the top right.</span></span>
+        </div>
+        <div class="toast-step">
+            <span class="toast-num">2.</span>
+            <span>Then <span class="toast-bold">press "Open in browser"</span> to download <span
+                    class="toast-bold">InkTry</span> for free.</span>
+        </div>
+    </div>
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <!-- Background gradient -->
@@ -89,7 +199,8 @@
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="https://apple.co/44OdrdJ" target="_blank" rel="noopener noreferrer"
+                <a href="https://apps.apple.com/us/app/inktry-ai-tattoo-generator/id6755972452" target="_blank"
+                    rel="noopener noreferrer" onclick="handleAppStoreClick(event)"
                     class="inline-block transition-transform hover:scale-105 duration-200">
                     <img src="app-store-badge.png" alt="Download on the App Store" class="h-14">
                 </a>
